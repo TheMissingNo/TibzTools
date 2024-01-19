@@ -81,7 +81,7 @@ if (existingIndex !== -1) {
 
       const dayElement = document.createElement('div');
       dayElement.classList.add('day');
-      dayElement.innerHTML = `${dayData.day}<br>exp: ${dayData.exp}KK<br>profit: ${dayData.profit}KK<br>${dayData.hours}<br>`;
+      dayElement.innerHTML = `${dayData.day}<br>exp: ${parseFloat(dayData.exp).toFixed(2)}KK<br>profit: ${parseFloat(dayData.profit).toFixed(2)}KK<br>${dayData.hours}<br>`;
       calendarContainer.appendChild(dayElement);
     }
   }
@@ -207,8 +207,8 @@ function updateMonthlyOverviewTable() {
         // Access the values
         const { TotalExp, TotalProfit } = targetEntry;
   
-        monthCellProfit.innerText = `${TotalProfit}KK`;
-        monthCellExp.innerText = `${TotalExp}KK`;
+        monthCellProfit.innerText = `${parseFloat(TotalProfit).toFixed(2)}KK`;
+        monthCellExp.innerText = `${parseFloat(TotalExp).toFixed(2)}KK`;
       } else {
         monthCellProfit.innerText = '';
         monthCellExp.innerText = ''; // If no data is found, clear the cell
@@ -243,14 +243,15 @@ function submitForm() {
     const selectedDayData = calendarData.find(data => data.day === selectedDate.getDate() && data.month === currentDate.getMonth() && data.year === currentDate.getFullYear());
 
     // Update dayData with form input values
-    selectedDayData.exp += parseFloat(expInput.value) || 0;
-    selectedDayData.profit += parseFloat(profitInput.value) || 0;
+    selectedDayData.exp += parseFloat(expInput.value).toFixed(2) || 0;
+    selectedDayData.profit += parseFloat(profitInput.value).toFixed(2) || 0;
     selectedDayData.hours += parseInt(timeInput.value) || 0;
     selectedDayData.hours = formatTime(selectedDayData.hours);
-    addExp(parseFloat(expInput.value) || 0)
+    addExp(parseFloat(expInput.value).toFixed(2) || 0);
+   
     // Update the content of the selected dayElement with updated dayData
     const selectedDayElement = calendarContainer.querySelector(`.day:nth-child(${selectedDate.getDate()})`);
-    selectedDayElement.innerHTML = `${selectedDayData.day}<br>exp: ${selectedDayData.exp}KK<br>profit: ${selectedDayData.profit}KK<br>${selectedDayData.hours}<br>`;
+    selectedDayElement.innerHTML = `${selectedDayData.day}<br>exp: ${parseFloat(selectedDayData.exp).toFixed(2)}KK<br>profit: ${parseFloat(selectedDayData.profit).toFixed(2)}KK<br>${selectedDayData.hours}<br>`;
 
     // Clear the form inputs
     expInput.value = '';
