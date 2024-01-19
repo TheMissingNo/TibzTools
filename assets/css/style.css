@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+:root {
+  --primary-color: #5a2800;
+  --primary-color-hover:  #a04800;
+  background-image:url(https://static.tibia.com/images/global/header/background-artwork.webp);
+  background-color: #051122;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+* {
+  box-sizing: border-box;
+  outline: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open sans', sans-serif;
+  font-size: 0.9em;
+}
+.menu{
+  text-align: right;
+  margin-bottom: 35px;
+}
+
+.top{
+  margin: 5px;
+  padding: 10px;
+  color: white;
+}
+.container {
+  width: 25%;
+  background-image:url(https://static.tibia.com/images/global/content/scroll.gif);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 15px;
+}
+.containerCalendar, .MonthlyTable{
+  background-image:url(https://static.tibia.com/images/global/content/scroll.gif);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 15px;  
+}
+
+form input, form label, form button {
+  display: block;
+  margin-bottom: 10px;
+}
+
+
+input:focus {
+  outline: 1px solid var(--primary-color);
+}
+
+form button {
+  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  height: 50px;
+  cursor: pointer;
+  margin-top: 30px;
+  border-radius: 10px;
+  width: fit-content;
+  padding: 10px;
+}
+
+form button:hover {
+  background-color: #a04800;
+}
+
+.psetvalid{
+  background: green;
+}
+.psetinvalid{
+  background:red;
+}
+
+.month-title {
+  font-size: 1.5em;
+}
+
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start;
+  padding: 10px;
+  font-size: small;
+}
+
+.day {
+width: 100px;
+height: 100px;
+border: 2.5px solid #ccc;
+margin: 5px;
+text-align: left;
+padding: 5px;
+border-radius: 10px;
+}
+
+.nav-arrow {
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.nav-arrow-s {
+  font-size: 1em;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#feedback {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  width: 200px;
+  text-align: center;
+}
+
+.info {
+  background-color: yellow;
+}
+
+.error {
+  background-color: red;
+}
+
+.success {
+  background-color: green;
+}
+input {
+  text-rendering: auto;
+  color: fieldtext;
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  text-align: start;
+  appearance: auto;
+  cursor: text;
+  background-color: field;
+  padding: 1px 0px;
+  border-width: 2px;
+  border-style: inset;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  border-image: initial;
+  padding-block: 1px;
+  padding-inline: 2px;
+
+}
+.add{
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  text-align: center;
+  background-color: #5a2800;
+  color: white;
+  font-weight: bolder;
+  font-size: 35px;
+  position: relative;
+  right: -85%;
+  cursor: pointer;
+}
+.plus{
+  position: inherit;
+  top:-5px;
+}
+.add:hover, .addupload:hover{
+  background-color: #a04800;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styles for the popup container */
+.popup {
+  background-image:url(https://static.tibia.com/images/global/content/scroll.gif);
+  padding: 35px;
+  border-radius: 10px;
+  border: black solid 2px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Drop shadow for a subtle effect */
+  width: 350px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Optional: Styles for the close button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+.hidden{
+  visibility: hidden;
+  display: none;
+}
+.buttons{
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  bottom: 0;
+}
+table, td, th{
+  border: 2.5px solid #ccc;
+}
+td, tr, th{
+  width: 100px;
+  height: 50px;
+  border-radius: 5px;
+  padding: 5px;
+}
+.content{
+  display: flex;
+}
+.icon{
+  position: inherit;
+  top:-5px;
+}
+.margintop-ten{
+  margin-top: 10%;
+}
+.changeEdit{
+  padding: 20px;
+  margin-left: 10%;
+}
+.calc li {
+	gap: 1rem;
+	background:#a04800;
+	padding: 1.5rem;
+	border-radius: 1rem;
+	width: calc(100% - 2rem);
+	box-shadow: 0.25rem 0.25rem 0.75rem rgb(0 0 0 / 0.1);
+  list-style: none;
+  margin: 5px;
+}
+.addupload{
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  text-align: center;
+  background-color: #5a2800;
+  color: white;
+  font-weight: bolder;
+  font-size: 25px;
+  position: relative;
+  right: -85%;
+  cursor: pointer;
+  margin-top: 15px;
+}
+.flexcolumn{
+margin-right: 45px;
+}
+.cloud{
+  position: inherit;
+  top: 5px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 15px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+/*.formsize{
+  width: fit-content;
+}*/
+.size{
+  width: 75%;
+}

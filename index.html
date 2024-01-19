@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Tibz Tool</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+  <div class="top"><h1>Tibz Tools</h1>
+  </div>
+  <div class="content"> 
+  <div class="size">
+    <section class="containerCalendar">
+      <h1>Calendar</h1>
+      <div class="add" onclick="toggleOverlay()"><span class="plus">+</span></div>
+      <p>
+        <span class="nav-arrow" >&#60;</span>
+        <span id="monthTitle" class="month-title"></span>
+        <span class="nav-arrow" >&#62;</span>
+      </p>
+      <div id="calendar" class="calendar"></div>
+    </section>
+    <section class="MonthlyTable">
+      <h1>Monthly Overview</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <span class="nav-arrow-s">&#60;</span>
+              <span id="yearTitle" class="year-title"></span>
+              <span class="nav-arrow-s">&#62;</span></th>
+            <th>January</th>
+            <th>February</th>
+            <th>March</th>
+            <th>April</th>
+            <th>May</th>
+            <th>June</th>
+            <th>July</th>
+            <th>August</th>
+            <th>September</th>
+            <th>October</th>
+            <th>November</th>
+            <th>December</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Profit</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Exp</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+        </table>
+  
+
+    </section>
+  </div>
+  
+<section class="container">
+  <div id="changeEdit" class="changeEdit">
+
+<div class="formsize">
+  <div class="flexcolumn">
+    <div class="add back margintop-ten changeside"><span class="icon">&#8617;</span> </div>
+    <div class="addupload tooltip" onclick="exportData()"><span class="cloud">&#9729;</span><span class="cloud">&#10515;</span> <span class="tooltiptext">Download Settings and Calendar</span></div>
+    <label for="importFile" class="importLabel"><div class="addupload tooltip"><input type="file" id="importFile" style="display: none;" /><span class="cloud">&#9729;</span><span class="cloud">&#10514;</span><span class="tooltiptext">Upload Settings and Calendar</span></div></label>
+    </div>
+    <form class="form" action="" method="get">
+      <p>Current Exp in KK <input type="text" class="current"></p>
+      <p>Target Exp in KK <input type="text" class="target"></p>
+      <p>Average KK/h <input type="text" class="expavg"></p>
+      <p>Average Profit/h <input type="text" class="profitavg"></p>
+      <p>Average ML/h <input type="text" class="ml"></p>
+      <p>Average Skill/h <input type="text" class="skill"></p>
+      <p>Gold Token Price <input type="text" class="gtprice"></p>
+      <p>Amount of Imbuements <input type="text" class="imbue"></p>
+      <p>Silver Token Price <input type="text" class="sprice"></p>
+      <p>Silver Token Per Hour<input type="text" class="st"></p>
+      <button type="button" id="setButton">Set</button>
+    </form>
+  </div>
+
+
+
+   <!-- <button type="button" onclick="exportData()">Export Data</button>
+    
+    <input type="file" id="importFile" style="display: none;" />
+    <label for="importFile" class="importLabel">
+      <span class="icon">&#8682;</span> Import Data
+    </label>
+-->
+
+
+  </div>
+
+  <div id="changeShow" class="changeShow hidden">
+    <div class="add setting margintop-ten changeside"><span class="icon">&#9881;</span> </div>
+      <h1>Calculation</h1>
+          <ul class="calc"></ul>
+  </div>
+    </section>
+  
+
+
+  
+
+</div>
+<div id="feedback"></div>
+<div class="overlay hidden" id="popupOverlay">
+  <div class="popup">
+    <h1>Add hunt</h1>
+    <form class="form-calendar" action="" method="get">
+      <p>Exp in KK: <input type="number" class="exp"></p>
+      <p>Profit in KK: <input type="number" class="profit"></p>
+      <p>Time in Minutes: <input type="number" class="time"></p>
+      <p>Date: <input type="date" class="date"></p>
+      <div class="buttons">
+        <button type="close" onclick="toggleOverlay()">Close</button>
+        <button type="submit" onclick="submitForm()">Submit</button>
+        </div>
+
+    </form>
+
+  </div>
+</div>
+  <script src="./assets/js/main.js"></script>
+</body>
+
+</html>
+
