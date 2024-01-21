@@ -128,7 +128,8 @@ border-radius: 10px;
 }
 
 .info {
-  background-color: yellow;
+  background-color: rgb(167, 167, 19);
+  color: #051122;
 }
 
 .error {
@@ -256,6 +257,8 @@ td, tr, th{
 	box-shadow: 0.25rem 0.25rem 0.75rem rgb(0 0 0 / 0.1);
   list-style: none;
   margin: 5px;
+  color: #fff;
+  font-size: medium;
 }
 .addupload{
   width: 40px;
@@ -312,4 +315,21 @@ margin-right: 45px;
 }*/
 .size{
   width: 75%;
+}
+.delete{
+text-align: right;
+
+}
+.delBtn, .subDelBtn{
+  width: 40px;
+  height: 40px;
+}
+
+.align-hor{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.deleteDate{
+  margin-right: 10px;
 }

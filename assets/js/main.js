@@ -11,6 +11,49 @@ document.addEventListener('DOMContentLoaded', function () {
   calendarContainer = document.getElementById('calendar');    
   yearTitle = document.getElementById('yearTitle');
 
+  document.querySelector('.delBtn').addEventListener('click', function () {
+    const alignHorElement = document.querySelector('.align-hor');
+    const delBtnElement = document.querySelector('.delBtn');
+
+    alignHorElement.classList.toggle('hidden');
+    delBtnElement.classList.toggle('hidden');
+  });
+
+  document.querySelector('.subDelBtn').addEventListener('click', function () {
+    const deleteDateInput = document.querySelector('.deleteDate');
+    const selectedDate = new Date(deleteDateInput.value);
+
+    // Find and reset data for the selected date
+    const targetEntryIndex = calendarData.findIndex(
+      (data) =>
+        data.day === selectedDate.getDate() &&
+        data.month === selectedDate.getMonth() &&
+        data.year === selectedDate.getFullYear()
+    );
+
+    if (targetEntryIndex !== -1) {
+      calendarData[targetEntryIndex].exp = 0;
+      calendarData[targetEntryIndex].profit = 0;
+      calendarData[targetEntryIndex].hours = 0;
+
+      // Save updated calendar data to localStorage
+      localStorage.setItem('calendarData', JSON.stringify(calendarData));
+
+      // Hide align-hor and delBtn
+      const alignHorElement = document.querySelector('.align-hor');
+      const delBtnElement = document.querySelector('.delBtn');
+
+      alignHorElement.classList.add('hidden');
+      delBtnElement.classList.remove('hidden');
+
+      // Show feedback message
+      showFeedbackMessage('Data for the selected date reset successfully!', 'success');
+    } else {
+      // Show error message if no data found for the selected date
+      showFeedbackMessage('No data found for the selected date!', 'error');
+    }
+    renderCalendar()
+  });
 
   // Load saved calendar data from localStorage
   let storedCalendarData = localStorage.getItem('calendarData');
@@ -81,8 +124,14 @@ if (existingIndex !== -1) {
 
       const dayElement = document.createElement('div');
       dayElement.classList.add('day');
-      dayElement.innerHTML = `${dayData.day}<br>exp: ${parseFloat(dayData.exp).toFixed(2)}KK<br>profit: ${parseFloat(dayData.profit).toFixed(2)}KK<br>${dayData.hours}<br>`;
-      calendarContainer.appendChild(dayElement);
+      if (parseFloat(dayData.hours)>0) {
+        dayElement.innerHTML = `${dayData.day}<br>exp: ${parseFloat(dayData.exp).toFixed(2)}KK<br>profit: ${parseFloat(dayData.profit).toFixed(2)}KK<br>${formatTime(parseFloat(dayData.hours))}<br>`;
+        calendarContainer.appendChild(dayElement);
+      } else {
+        dayElement.innerHTML = `${dayData.day}<br>exp: ${parseFloat(dayData.exp).toFixed(2)}KK<br>profit: ${parseFloat(dayData.profit).toFixed(2)}KK<br>`;
+        calendarContainer.appendChild(dayElement);
+      }
+
     }
   }
 
@@ -240,18 +289,37 @@ function submitForm() {
     selectedDate.getMonth() === currentDate.getMonth()
   ) {
     // Get the selected dayData in the calendar
-    const selectedDayData = calendarData.find(data => data.day === selectedDate.getDate() && data.month === currentDate.getMonth() && data.year === currentDate.getFullYear());
+    const selectedDayData = calendarData.find(
+      (data) =>
+        data.day === selectedDate.getDate() &&
+        data.month === currentDate.getMonth() &&
+        data.year === currentDate.getFullYear()
+    );
 
     // Update dayData with form input values
-    selectedDayData.exp += parseFloat(expInput.value).toFixed(2) || 0;
-    selectedDayData.profit += parseFloat(profitInput.value).toFixed(2) || 0;
-    selectedDayData.hours += parseInt(timeInput.value) || 0;
-    selectedDayData.hours = formatTime(selectedDayData.hours);
-    addExp(parseFloat(expInput.value).toFixed(2) || 0);
-   
+    selectedDayData.exp = (parseFloat(selectedDayData.exp) || 0) + (parseFloat(expInput.value) || 0);
+    selectedDayData.profit = (parseFloat(selectedDayData.profit) || 0) + (parseFloat(profitInput.value) || 0);
+    selectedDayData.hours = (parseInt(selectedDayData.hours) || 0) + (parseInt(timeInput.value) || 0);
+
+    // Check if there is an existing entry for this day
+    const existingIndex = calendarData.findIndex(
+      (data) =>
+        data.day === selectedDate.getDate() &&
+        data.month === currentDate.getMonth() &&
+        data.year === currentDate.getFullYear()
+    );
+
+    if (existingIndex !== -1) {
+      // If entry exists, update it
+      calendarData[existingIndex] = selectedDayData;
+    } else {
+      // If entry doesn't exist, add a new one
+      calendarData.push(selectedDayData);
+    }
+
     // Update the content of the selected dayElement with updated dayData
     const selectedDayElement = calendarContainer.querySelector(`.day:nth-child(${selectedDate.getDate()})`);
-    selectedDayElement.innerHTML = `${selectedDayData.day}<br>exp: ${parseFloat(selectedDayData.exp).toFixed(2)}KK<br>profit: ${parseFloat(selectedDayData.profit).toFixed(2)}KK<br>${selectedDayData.hours}<br>`;
+    selectedDayElement.innerHTML = `${selectedDayData.day}<br>exp: ${parseFloat(selectedDayData.exp).toFixed(2)}KK<br>profit: ${parseFloat(selectedDayData.profit).toFixed(2)}KK<br>${formatTime(selectedDayData.hours)}<br>`;
 
     // Clear the form inputs
     expInput.value = '';
@@ -277,11 +345,21 @@ function formatTime(minutes) {
   const minutesString = remainingMinutes > 0 ? `${remainingMinutes}min` : '';
 
   // Combine hours and minutes strings
-  const formattedTime = `${hoursString}${minutesString}`;
+  const formattedTime = `${hoursString}${parseInt(minutesString)}`;
 
   return formattedTime;
 }
 function saveValues() {
+  currentExp=parseFloat(document.querySelector('.current').value).toFixed(2);
+  targetExp=parseFloat(document.querySelector('.target').value ).toFixed(2);
+  expAvg=parseFloat(document.querySelector('.expavg').value ).toFixed(2);
+  profitAvg=parseFloat(document.querySelector('.profitavg').value ).toFixed(2);
+  ml=parseFloat(document.querySelector('.ml').value).toFixed(2);
+  skill=parseFloat(document.querySelector('.skill').value).toFixed(2);
+  gtPrice=parseFloat(document.querySelector('.gtprice').value ).toFixed(2);
+  imbue=parseFloat(document.querySelector('.imbue').value).toFixed(2); 
+  stprice=parseFloat(document.querySelector('.sprice').value).toFixed(2); 
+  st=parseFloat(document.querySelector('.st').value ).toFixed(2);
 
     // Store values in local storage
     localStorage.setItem('currentExp', currentExp);
@@ -294,8 +372,6 @@ function saveValues() {
     localStorage.setItem('imbue', imbue);
     localStorage.setItem('stprice', stprice);
     localStorage.setItem('st', st);
-
-
 
 //run calculations and fill the list
 fillCalculations()
@@ -313,6 +389,7 @@ fillCalculations()
   document.querySelector('.imbue').value = parseFloat(localStorage.getItem('imbue')) || 0;
   document.querySelector('.sprice').value = parseFloat(localStorage.getItem('stprice')) || 0;
   document.querySelector('.st').value = parseFloat(localStorage.getItem('st')) || 0;
+  saveValues();
 
   function exportData() {
     const dataToExport = {
@@ -419,6 +496,7 @@ function handleFileChange(event) {
   function fillCalculations(){
     const calcList = document.querySelector('.calc');
     calcList.innerHTML='';
+
     currentExp = parseFloat(document.querySelector('.current').value) || 0;
     targetExp = parseFloat(document.querySelector('.target').value) || 0;
     expAvg = parseFloat(document.querySelector('.expavg').value) || 0;
@@ -430,42 +508,42 @@ function handleFileChange(event) {
     stprice = parseFloat(document.querySelector('.sprice').value) || 0;
     st = parseFloat(document.querySelector('.st').value) || 0;
 
+
     let expLeft = parseFloat(targetExp - currentExp);
-    let Hleft = expAvg !== 0 ? formatTime(expLeft / expAvg) : 0;
+    let Hleft = expAvg !== 0 ? formatTime((expLeft / expAvg)*60) : 0;
     let MlLeft = expAvg !== 0 ? parseFloat(ml * (expLeft / expAvg)) : 0;
     let SkillLeft = expAvg !== 0 ? parseFloat(skill * (expLeft / expAvg)) : 0;
     let DaysGreenStamina = expAvg !== 0 ? parseFloat((expLeft / expAvg) / 3) : 0;
-    let HourlyImbueCost = expAvg !== 0 ? parseFloat((gtPrice * imbue) / 20) : 0;
+    let HourlyImbueCost = expAvg !== 0 ? parseFloat((((gtPrice*6)+0.15) * (imbue)) / 20) : 0;
     let stHour = parseFloat(st * stprice);
 
 if (expLeft!=0) {
-    addItemToCalcList('Exp left for target level: ' +expLeft)
+    addItemToCalcList('Exp left for target level: ' +expLeft.toFixed(2)+'KK')
 }
 
 if (Hleft!=0) {
-    addItemToCalcList('Hours left for target level: '+formatTime(Hleft))
+    addItemToCalcList('Hours left for target level: '+Hleft)
 }
 if (MlLeft!=0) {
-    addItemToCalcList('Magic level you can get in the remaining time: '+MlLeft.toFixed(2))
+    addItemToCalcList('Magic level you can get in the remaining time: '+MlLeft.toFixed(2)+'%')
 }
 if (SkillLeft!=0) {
-    addItemToCalcList('Skill you can get in the remaining time: '+SkillLeft.toFixed(2))
+    addItemToCalcList('Skill you can get in the remaining time: '+SkillLeft.toFixed(2)+'%')
 }
 if (DaysGreenStamina!=0) {
     addItemToCalcList('Days hunting with green stamina(3h): '+DaysGreenStamina.toFixed(2))
 }
 if (HourlyImbueCost!=0) {
-    addItemToCalcList('Hourly Cost of Imbuements: '+HourlyImbueCost.toFixed(2) )
+    addItemToCalcList('Hourly Cost of Imbuements: '+HourlyImbueCost.toFixed(2)+'KK')
 }
 if (stHour!=0) {
-    addItemToCalcList('Hourly Cost of silver tokens: '+stHour.toFixed(2))
+    addItemToCalcList('Hourly Cost of silver tokens: '+stHour.toFixed(2)+'+KK')
 }
 }
 
 function addExp(exp){
     currentExp+=exp;
     saveValues()
-    fillCalculations()
 }
 
 //create li to fill calculations
@@ -481,9 +559,7 @@ function addItemToCalcList(itemText) {
         }
       }
 
-fillCalculations()
-
 document.getElementById('setButton').addEventListener('click', function () {
   saveValues();
-  fillCalculations();
+  showFeedbackMessage("Done saving information","success");
 });
